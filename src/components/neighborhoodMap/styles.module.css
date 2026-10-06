@@ -1,0 +1,296 @@
+.mapPanel {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
+
+    .mapHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 20px 22px;
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 25px;
+            line-height: 1.15;
+        }
+
+        p {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .mapNote {
+            padding: 7px 10px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+    }
+
+    .mapCanvas {
+        position: relative;
+        overflow: hidden;
+        min-height: 510px;
+        margin: 0 14px;
+        border: 1px solid #d0d8ca;
+        border-radius: 14px;
+        background: #e9eadc;
+        isolation: isolate;
+    }
+
+    .mapArtwork {
+        position: absolute;
+        inset: 0;
+        transform: scale(var(--map-zoom));
+        transform-origin: center;
+        transition: transform 180ms ease;
+    }
+
+    .mapDrawing {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .marker {
+        position: absolute;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        max-width: min(260px, 36%);
+        min-height: 40px;
+        padding: 3px;
+        border: 2px solid var(--marker-color);
+        border-radius: 999px;
+        background: #fffefa;
+        color: var(--ink);
+        box-shadow: 0 3px 10px rgba(30, 54, 45, 0.18);
+        text-align: left;
+        transform: translate(-50%, -50%);
+        transition:
+            border-color 150ms ease,
+            box-shadow 150ms ease;
+
+        .markerIcon {
+            display: grid;
+            flex: 0 0 30px;
+            width: 30px;
+            height: 30px;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--marker-color);
+            color: white;
+
+            svg {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        .markerName {
+            overflow: hidden;
+            padding-right: 9px;
+            font-size: 12px;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &:hover,
+        &:focus-visible,
+        &.selected {
+            border-color: var(--forest-dark);
+            box-shadow: 0 0 0 4px rgba(244, 243, 237, 0.78), 0 5px 15px rgba(30, 54, 45, 0.22);
+            outline: none;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--forest-dark);
+            outline-offset: 3px;
+        }
+    }
+
+    .mapControls {
+        position: absolute;
+        z-index: 4;
+        top: 14px;
+        right: 14px;
+        display: grid;
+        gap: 6px;
+
+        button {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--surface);
+            box-shadow: 0 2px 8px rgba(30, 54, 45, 0.12);
+            font-size: 12px;
+            font-weight: 650;
+            transition:
+                border-color 150ms ease,
+                box-shadow 150ms ease;
+
+            svg {
+                width: 17px;
+                height: 17px;
+            }
+
+            &:hover:not(:disabled),
+            &:focus-visible {
+                border-color: var(--forest);
+                box-shadow: 0 0 0 3px rgba(36, 75, 64, 0.12);
+                outline: none;
+            }
+
+            &:disabled {
+                color: #9ca79c;
+            }
+        }
+
+        .resetZoom {
+            width: auto;
+            padding-inline: 10px;
+        }
+    }
+
+    .scaleLabel,
+    .mapPinKey {
+        position: absolute;
+        z-index: 3;
+        bottom: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 34px;
+        padding: 5px 10px;
+        border: 1px solid rgba(217, 222, 211, 0.9);
+        border-radius: 9px;
+        background: rgba(255, 254, 250, 0.95);
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 650;
+    }
+
+    .scaleLabel {
+        left: 14px;
+    }
+
+    .mapPinKey {
+        right: 14px;
+
+        svg {
+            width: 14px;
+            height: 14px;
+            color: var(--forest);
+        }
+    }
+
+    .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 20px;
+        padding: 17px 22px 20px;
+
+        li {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+
+            span {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: var(--legend-color);
+            }
+        }
+    }
+
+    @media (max-width: 760px) {
+        .mapHeader {
+            align-items: start;
+            padding: 17px 16px;
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .mapNote {
+                max-width: 132px;
+                font-size: 11px;
+                white-space: normal;
+                text-align: center;
+            }
+        }
+
+        .mapCanvas {
+            min-height: 460px;
+            margin-inline: 8px;
+        }
+
+        .marker {
+            max-width: min(190px, 48%);
+
+            .markerName {
+                max-width: 132px;
+                font-size: 11px;
+            }
+        }
+
+        .legend {
+            gap: 9px 14px;
+            padding: 14px 16px 17px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .mapCanvas {
+            min-height: 430px;
+        }
+
+        .marker {
+            min-height: 36px;
+
+            .markerIcon {
+                flex-basis: 26px;
+                width: 26px;
+                height: 26px;
+            }
+
+            .markerName {
+                max-width: 96px;
+                font-size: 10px;
+            }
+        }
+
+        .mapControls {
+            top: 9px;
+            right: 9px;
+
+            button {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        .scaleLabel,
+        .mapPinKey {
+            bottom: 9px;
+            font-size: 11px;
+        }
+    }
+}
