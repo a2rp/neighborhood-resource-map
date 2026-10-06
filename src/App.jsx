@@ -1,13 +1,93 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NeighborhoodMap from "./components/neighborhoodMap/index.jsx";
+import ResourceExplorer from "./components/resourceExplorer/index.jsx";
 import SiteHeader from "./components/siteHeader/index.jsx";
-import { resources } from "./data/resources.js";
+import {
+    resources,
+    resourceCategories,
+} from "./data/resources.js";
 import styles from "./App.module.css";
+
+const getSavedIds = () => {
+    try {
+        const saved = JSON.parse(window.localStorage.getItem("block-atlas-saved") || "[]");
+        return Array.isArray(saved) ? saved : [];
+    } catch {
+        return [];
+    }
+};
 
 const App = () => {
     const [selectedId, setSelectedId] = useState(resources[0].id);
     const [zoom, setZoom] = useState(100);
-    const selectedResource = resources.find((resource) => resource.id === selectedId);
+    const [query, setQuery] = useState("");
+    const [activeCategory, setActiveCategory] = useState("all");
+    const [neighborhood, setNeighborhood] = useState("All neighborhoods");
+    const [openOnly, setOpenOnly] = useState(false);
+    const [savedOnly, setSavedOnly] = useState(false);
+    const [savedIds, setSavedIds] = useState(getSavedIds);
+
+    useEffect(() => {
+        try {
+            window.localStorage.setItem("block-atlas-saved", JSON.stringify(savedIds));
+        } catch {
+            return;
+        }
+    }, [savedIds]);
+
+    const filteredResources = resources.filter((resource) => {
+        const searchText = [
+            resource.name,
+            resource.neighborhood,
+            resource.address,
+            resource.description,
+            resource.category,
+            ...resource.services,
+        ].join(" ").toLowerCase();
+        const matchesQuery = searchText.includes(query.trim().toLowerCase());
+        const matchesCategory =
+            activeCategory === "all" || resource.category === activeCategory;
+        const matchesNeighborhood =
+            neighborhood === "All neighborhoods" ||
+            resource.neighborhood === neighborhood;
+        const matchesOpen = !openOnly || resource.availability === "Open today";
+        const matchesSaved = !savedOnly || savedIds.includes(resource.id);
+
+        return (
+            matchesQuery &&
+            matchesCategory &&
+            matchesNeighborhood &&
+            matchesOpen &&
+            matchesSaved
+        );
+    });
+
+    const activeResource =
+        filteredResources.find((resource) => resource.id === selectedId) ||
+        filteredResources[0] ||
+        null;
+    const hasFilters =
+        query.trim() !== "" ||
+        activeCategory !== "all" ||
+        neighborhood !== "All neighborhoods" ||
+        openOnly ||
+        savedOnly;
+
+    const toggleSaved = (resourceId) => {
+        setSavedIds((current) =>
+            current.includes(resourceId)
+                ? current.filter((id) => id !== resourceId)
+                : [...current, resourceId],
+        );
+    };
+
+    const clearFilters = () => {
+        setQuery("");
+        setActiveCategory("all");
+        setNeighborhood("All neighborhoods");
+        setOpenOnly(false);
+        setSavedOnly(false);
+    };
 
     return (
         <div className={styles.appShell}>
@@ -24,22 +104,58 @@ const App = () => {
                     <p className={styles.sampleNote}>Example listings for a fictional district</p>
                 </section>
 
-                <section className={styles.mapSection} id="map">
-                    <NeighborhoodMap
-                        resources={resources}
-                        selectedId={selectedId}
+                <section className={styles.workspace} id="map">
+                    <ResourceExplorer
+                        resources={filteredResources}
+                        totalCount={resources.length}
+                        query={query}
+                        onQueryChange={setQuery}
+                        activeCategory={activeCategory}
+                        onCategoryChange={setActiveCategory}
+                        neighborhood={neighborhood}
+                        onNeighborhoodChange={setNeighborhood}
+                        openOnly={openOnly}
+                        onOpenOnlyChange={setOpenOnly}
+                        savedOnly={savedOnly}
+                        onSavedOnlyChange={setSavedOnly}
+                        savedIds={savedIds}
+                        selectedId={activeResource?.id}
                         onSelect={setSelectedId}
-                        zoom={zoom}
-                        onZoomChange={setZoom}
+                        onSave={toggleSaved}
+                        onClear={clearFilters}
+                        hasFilters={hasFilters}
                     />
-                </section>
 
-                <section className={styles.placeholder} id="places" aria-live="polite">
-                    <h2>{selectedResource.name}</h2>
-                    <p>
-                        {selectedResource.category} in {selectedResource.neighborhood}
-                        <span> - {selectedResource.address}</span>
-                    </p>
+                    <div className={styles.mapColumn}>
+                        <NeighborhoodMap
+                            resources={filteredResources}
+                            selectedId={activeResource?.id}
+                            onSelect={setSelectedId}
+                            zoom={zoom}
+                            onZoomChange={setZoom}
+                        />
+
+                        <section className={styles.selectedPlace} id="places" aria-live="polite">
+                            <div>
+                                <p>Selected place</p>
+                                {activeResource ? (
+                                    <>
+                                        <h2>{activeResource.name}</h2>
+                                        <span>
+                                            {resourceCategories.find((category) => category.id === activeResource.category)?.label}
+                                            {" · "}{activeResource.neighborhood}
+                                            {" · "}{activeResource.address}
+                                        </span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h2>No places found</h2>
+                                        <span>Change or clear a filter to see more places.</span>
+                                    </>
+                                )}
+                            </div>
+                        </section>
+                    </div>
                 </section>
 
                 <section className={styles.about} id="about">
