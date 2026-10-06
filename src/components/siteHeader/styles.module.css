@@ -1,0 +1,155 @@
+.header {
+    position: fixed;
+    z-index: 20;
+    inset: 0 0 auto;
+    height: 76px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--forest-dark);
+    color: #f9f8f1;
+
+    .headerInner {
+        display: grid;
+        grid-template-columns: 230px 1fr auto;
+        align-items: center;
+        width: min(100% - 48px, 1440px);
+        height: 100%;
+        margin-inline: auto;
+    }
+
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        width: fit-content;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+
+        .brandMark {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border: 1px solid rgba(245, 188, 89, 0.65);
+            border-radius: 12px;
+            color: var(--amber);
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        a {
+            padding: 10px 0;
+            border-bottom: 2px solid transparent;
+            color: #d1ddd5;
+            font-size: 14px;
+            font-weight: 600;
+            transition:
+                border-color 160ms ease,
+                box-shadow 160ms ease;
+
+            &:hover,
+            &:focus-visible {
+                border-color: var(--amber);
+                box-shadow: 0 2px 0 rgba(225, 163, 68, 0.2);
+                outline: none;
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .repository,
+    .menuButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 42px;
+        padding: 0 14px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 10px;
+        background: transparent;
+        color: inherit;
+        font-size: 13px;
+        font-weight: 650;
+        transition:
+            border-color 160ms ease,
+            box-shadow 160ms ease;
+
+        svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        &:hover,
+        &:focus-visible {
+            border-color: var(--amber);
+            box-shadow: 0 0 0 3px rgba(225, 163, 68, 0.16);
+            outline: none;
+        }
+    }
+
+    .menuButton {
+        display: none;
+        padding-inline: 11px;
+    }
+
+    @media (max-width: 760px) {
+        height: 68px;
+
+        .headerInner {
+            grid-template-columns: 1fr auto;
+            width: min(100% - 28px, 1440px);
+        }
+
+        .nav {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            display: none;
+            padding: 10px 18px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+            background: var(--forest-dark);
+
+            &.navOpen {
+                display: grid;
+                gap: 3px;
+            }
+
+            a {
+                padding: 12px 8px;
+                border-bottom-width: 1px;
+            }
+        }
+
+        .actions {
+            gap: 8px;
+        }
+
+        .repository {
+            min-height: 40px;
+            padding-inline: 10px;
+        }
+
+        .menuButton {
+            display: inline-flex;
+            width: 40px;
+            min-height: 40px;
+            padding: 0;
+        }
+    }
+}
