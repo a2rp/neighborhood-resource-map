@@ -1,0 +1,26 @@
+.appShell {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 32px;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+
+    .placeholder {
+        display: grid;
+        gap: 12px;
+        max-width: 620px;
+        text-align: center;
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 7vw, 76px);
+            line-height: 0.98;
+        }
+
+        p {
+            color: var(--muted);
+        }
+    }
+}
