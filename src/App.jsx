@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import NeighborhoodMap from "./components/neighborhoodMap/index.jsx";
+import ResourceDetails from "./components/resourceDetails/index.jsx";
 import ResourceExplorer from "./components/resourceExplorer/index.jsx";
 import SiteHeader from "./components/siteHeader/index.jsx";
-import {
-    resources,
-    resourceCategories,
-} from "./data/resources.js";
+import { isOpenToday, resources } from "./data/resources.js";
 import styles from "./App.module.css";
 
 const getSavedIds = () => {
@@ -50,7 +48,7 @@ const App = () => {
         const matchesNeighborhood =
             neighborhood === "All neighborhoods" ||
             resource.neighborhood === neighborhood;
-        const matchesOpen = !openOnly || resource.availability === "Open today";
+        const matchesOpen = !openOnly || isOpenToday(resource);
         const matchesSaved = !savedOnly || savedIds.includes(resource.id);
 
         return (
@@ -105,26 +103,28 @@ const App = () => {
                 </section>
 
                 <section className={styles.workspace} id="map">
-                    <ResourceExplorer
-                        resources={filteredResources}
-                        totalCount={resources.length}
-                        query={query}
-                        onQueryChange={setQuery}
-                        activeCategory={activeCategory}
-                        onCategoryChange={setActiveCategory}
-                        neighborhood={neighborhood}
-                        onNeighborhoodChange={setNeighborhood}
-                        openOnly={openOnly}
-                        onOpenOnlyChange={setOpenOnly}
-                        savedOnly={savedOnly}
-                        onSavedOnlyChange={setSavedOnly}
-                        savedIds={savedIds}
-                        selectedId={activeResource?.id}
-                        onSelect={setSelectedId}
-                        onSave={toggleSaved}
-                        onClear={clearFilters}
-                        hasFilters={hasFilters}
-                    />
+                    <div className={styles.explorerSlot}>
+                        <ResourceExplorer
+                            resources={filteredResources}
+                            totalCount={resources.length}
+                            query={query}
+                            onQueryChange={setQuery}
+                            activeCategory={activeCategory}
+                            onCategoryChange={setActiveCategory}
+                            neighborhood={neighborhood}
+                            onNeighborhoodChange={setNeighborhood}
+                            openOnly={openOnly}
+                            onOpenOnlyChange={setOpenOnly}
+                            savedOnly={savedOnly}
+                            onSavedOnlyChange={setSavedOnly}
+                            savedIds={savedIds}
+                            selectedId={activeResource?.id}
+                            onSelect={setSelectedId}
+                            onSave={toggleSaved}
+                            onClear={clearFilters}
+                            hasFilters={hasFilters}
+                        />
+                    </div>
 
                     <div className={styles.mapColumn}>
                         <NeighborhoodMap
@@ -134,28 +134,14 @@ const App = () => {
                             zoom={zoom}
                             onZoomChange={setZoom}
                         />
-
-                        <section className={styles.selectedPlace} id="places" aria-live="polite">
-                            <div>
-                                <p>Selected place</p>
-                                {activeResource ? (
-                                    <>
-                                        <h2>{activeResource.name}</h2>
-                                        <span>
-                                            {resourceCategories.find((category) => category.id === activeResource.category)?.label}
-                                            {" · "}{activeResource.neighborhood}
-                                            {" · "}{activeResource.address}
-                                        </span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <h2>No places found</h2>
-                                        <span>Change or clear a filter to see more places.</span>
-                                    </>
-                                )}
-                            </div>
-                        </section>
                     </div>
+
+                    <ResourceDetails
+                        resource={activeResource}
+                        saved={activeResource ? savedIds.includes(activeResource.id) : false}
+                        openToday={activeResource ? isOpenToday(activeResource) : false}
+                        onSave={toggleSaved}
+                    />
                 </section>
 
                 <section className={styles.about} id="about">

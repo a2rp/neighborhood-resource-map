@@ -1,3 +1,26 @@
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export const isOpenToday = (resource) => {
+    const schedule = resource.hours.split(",")[0];
+
+    if (schedule === "Daily") {
+        return true;
+    }
+
+    const [firstDay, lastDay] = schedule.split("-");
+    const currentDay = new Date().getDay();
+    const firstIndex = weekdays.indexOf(firstDay);
+    const lastIndex = lastDay ? weekdays.indexOf(lastDay) : firstIndex;
+
+    if (firstIndex === -1 || lastIndex === -1) {
+        return false;
+    }
+
+    return firstIndex <= lastIndex
+        ? currentDay >= firstIndex && currentDay <= lastIndex
+        : currentDay >= firstIndex || currentDay <= lastIndex;
+};
+
 export const resourceCategories = [
     { id: "food", label: "Food and essentials", color: "#b77a35" },
     { id: "health", label: "Health and care", color: "#537c73" },
