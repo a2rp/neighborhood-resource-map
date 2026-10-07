@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import BackToTop from "./components/backToTop/index.jsx";
+import { useEffect, useState } from "react";
 import NeighborhoodMap from "./components/neighborhoodMap/index.jsx";
 import ResourceDetails from "./components/resourceDetails/index.jsx";
 import ResourceExplorer from "./components/resourceExplorer/index.jsx";

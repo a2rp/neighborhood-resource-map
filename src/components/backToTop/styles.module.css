@@ -1,0 +1,45 @@
+.backToTop {
+    position: fixed;
+    z-index: 15;
+    right: max(20px, calc((100vw - 1440px) / 2));
+    bottom: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--forest-dark);
+    border-radius: 999px;
+    background: var(--forest-dark);
+    color: #fffefa;
+    box-shadow: 0 7px 20px rgba(21, 48, 41, 0.22);
+    font-size: 12px;
+    font-weight: 700;
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    &:hover,
+    &:focus-visible {
+        border-color: var(--amber);
+        box-shadow: 0 0 0 4px rgba(225, 163, 68, 0.2), 0 7px 20px rgba(21, 48, 41, 0.22);
+        outline: none;
+    }
+
+    @media (max-width: 760px) {
+        right: 14px;
+        bottom: 14px;
+        min-height: 44px;
+        padding-inline: 12px;
+
+        span {
+            display: none;
+        }
+    }
+}
