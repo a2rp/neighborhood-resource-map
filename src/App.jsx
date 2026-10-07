@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import BackToTop from "./components/backToTop/index.jsx";
 import NeighborhoodMap from "./components/neighborhoodMap/index.jsx";
 import ResourceDetails from "./components/resourceDetails/index.jsx";
 import ResourceExplorer from "./components/resourceExplorer/index.jsx";
+import SiteFooter from "./components/siteFooter/index.jsx";
 import SiteHeader from "./components/siteHeader/index.jsx";
 import { isOpenToday, resources } from "./data/resources.js";
 import styles from "./App.module.css";
@@ -151,6 +153,8 @@ const App = () => {
                     </p>
                 </section>
             </main>
+            <SiteFooter />
+            <BackToTop />
         </div>
     );
 };
