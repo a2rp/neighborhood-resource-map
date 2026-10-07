@@ -110,7 +110,7 @@ const ResourceDetails = ({ resource, saved, openToday, onSave }) => {
 
             <div className={styles.actions}>
                 <button
-                    className={styles.saveButton}
+                    className={saved ? styles.saveActive : styles.saveButton}
                     type="button"
                     aria-pressed={saved}
                     onClick={() => onSave(resource.id)}

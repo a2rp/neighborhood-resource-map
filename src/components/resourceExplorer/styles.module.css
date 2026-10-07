@@ -328,7 +328,11 @@
     }
 
     .saveActive {
-        color: #f2c579;
+        color: #f2a17d;
+
+        svg {
+            fill: currentColor;
+        }
     }
 
     .emptyState {

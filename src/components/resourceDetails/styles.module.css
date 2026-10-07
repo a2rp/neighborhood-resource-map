@@ -214,6 +214,17 @@
             color: #fffefa;
         }
 
+        .saveActive {
+            border-color: var(--forest-dark);
+            background: var(--forest-dark);
+            color: #fffefa;
+
+            svg {
+                color: #f2a17d;
+                fill: currentColor;
+            }
+        }
+
         .mapLink {
             grid-column: 1 / -1;
             background: var(--surface-soft);
