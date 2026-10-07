@@ -41,7 +41,9 @@ const App = () => {
             resource.description,
             resource.category,
             ...resource.services,
-        ].join(" ").toLowerCase();
+        ]
+            .join(" ")
+            .toLowerCase();
         const matchesQuery = searchText.includes(query.trim().toLowerCase());
         const matchesCategory =
             activeCategory === "all" || resource.category === activeCategory;
@@ -77,7 +79,10 @@ const App = () => {
             : [...savedIds, resourceId];
 
         try {
-            window.localStorage.setItem("block-atlas-saved", JSON.stringify(nextIds));
+            window.localStorage.setItem(
+                "block-atlas-saved",
+                JSON.stringify(nextIds),
+            );
             setSavedState({ ids: nextIds, storageError: false });
         } catch {
             setSavedState({ ids: nextIds, storageError: true });
@@ -98,13 +103,18 @@ const App = () => {
             <main className={styles.pageContent}>
                 <section className={styles.intro}>
                     <div>
-                        <p className={styles.location}>A local guide for Northbank</p>
+                        <p className={styles.location}>
+                            A local guide for Northbank
+                        </p>
                         <h1>Find helpful places nearby.</h1>
                         <p className={styles.description}>
-                            Food, care, learning, and community support, mapped in one place.
+                            Food, care, learning, and community support, mapped
+                            in one place.
                         </p>
                     </div>
-                    <p className={styles.sampleNote}>Example listings for a fictional district</p>
+                    <p className={styles.sampleNote}>
+                        Example listings for a fictional district
+                    </p>
                 </section>
 
                 <section className={styles.workspace} id="map">
@@ -144,8 +154,14 @@ const App = () => {
 
                     <ResourceDetails
                         resource={activeResource}
-                        saved={activeResource ? savedIds.includes(activeResource.id) : false}
-                        openToday={activeResource ? isOpenToday(activeResource) : false}
+                        saved={
+                            activeResource
+                                ? savedIds.includes(activeResource.id)
+                                : false
+                        }
+                        openToday={
+                            activeResource ? isOpenToday(activeResource) : false
+                        }
                         onSave={toggleSaved}
                     />
                 </section>
@@ -153,7 +169,8 @@ const App = () => {
                 <section className={styles.about} id="about">
                     <h2>Built for the everyday search.</h2>
                     <p>
-                        Explore sample services in Northbank. Check details with each provider before visiting.
+                        Explore sample services in Northbank. Check details with
+                        each provider before visiting.
                     </p>
                 </section>
             </main>

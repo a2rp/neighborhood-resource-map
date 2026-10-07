@@ -42,20 +42,20 @@ The resource data and marker positions are in src/data/resources.js. Saved place
 
 Use Node.js and npm from the project folder:
 
-~~~sh
+```sh
 npm install
 npm run dev
-~~~
+```
 
 Vite prints the local development address in the terminal.
 
 ## Code checks and preview
 
-~~~sh
+```sh
 npm run lint
 npm run build
 npm run preview
-~~~
+```
 
 ESLint checks the source. The production build is written to dist. The preview command serves that production build locally.
 
@@ -63,9 +63,9 @@ ESLint checks the source. The production build is written to dist. The preview c
 
 This project publishes to GitHub Pages from the gh-pages branch. The npm deployment command runs the production build first:
 
-~~~sh
+```sh
 npm run deploy
-~~~
+```
 
 **Website:** [https://a2rp.github.io/neighborhood-resource-map/](https://a2rp.github.io/neighborhood-resource-map/)
 

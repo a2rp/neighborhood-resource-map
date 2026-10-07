@@ -48,13 +48,23 @@ const SiteHeader = () => {
                 </a>
 
                 <nav
-                    className={menuOpen ? styles.nav + " " + styles.navOpen : styles.nav}
+                    className={
+                        menuOpen
+                            ? styles.nav + " " + styles.navOpen
+                            : styles.nav
+                    }
                     id="site-navigation"
                     aria-label="Main navigation"
                 >
-                    <a href="#map" onClick={closeMenu}>Map</a>
-                    <a href="#places" onClick={closeMenu}>Places</a>
-                    <a href="#about" onClick={closeMenu}>About</a>
+                    <a href="#map" onClick={closeMenu}>
+                        Map
+                    </a>
+                    <a href="#places" onClick={closeMenu}>
+                        Places
+                    </a>
+                    <a href="#about" onClick={closeMenu}>
+                        About
+                    </a>
                 </nav>
 
                 <div className={styles.actions}>
@@ -70,13 +80,19 @@ const SiteHeader = () => {
                     <button
                         className={styles.menuButton}
                         type="button"
-                        aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+                        aria-label={
+                            menuOpen ? "Close navigation" : "Open navigation"
+                        }
                         aria-expanded={menuOpen}
                         aria-controls="site-navigation"
                         onClick={() => setMenuOpen(!menuOpen)}
                         ref={menuButtonRef}
                     >
-                        {menuOpen ? <FiX aria-hidden="true" /> : <FiMenu aria-hidden="true" />}
+                        {menuOpen ? (
+                            <FiX aria-hidden="true" />
+                        ) : (
+                            <FiMenu aria-hidden="true" />
+                        )}
                     </button>
                 </div>
             </div>

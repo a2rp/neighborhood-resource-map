@@ -108,7 +108,9 @@
         &:focus-visible,
         &.selected {
             border-color: var(--forest-dark);
-            box-shadow: 0 0 0 4px rgba(244, 243, 237, 0.78), 0 5px 15px rgba(30, 54, 45, 0.22);
+            box-shadow:
+                0 0 0 4px rgba(244, 243, 237, 0.78),
+                0 5px 15px rgba(30, 54, 45, 0.22);
             outline: none;
         }
 

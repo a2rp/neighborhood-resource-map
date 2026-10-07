@@ -34,18 +34,26 @@ const ResourceDetails = ({ resource, saved, openToday, onSave }) => {
 
     if (!resource) {
         return (
-            <aside className={styles.details} id="places" aria-labelledby="details-title">
+            <aside
+                className={styles.details}
+                id="places"
+                aria-labelledby="details-title"
+            >
                 <h2 id="details-title">Place details</h2>
                 <p className={styles.emptyState}>
-                    No places match those filters. Clear a filter to view a listing.
+                    No places match those filters. Clear a filter to view a
+                    listing.
                 </p>
             </aside>
         );
     }
 
-    const category = resourceCategories.find((item) => item.id === resource.category);
+    const category = resourceCategories.find(
+        (item) => item.id === resource.category,
+    );
     const Icon = categoryIcons[resource.category];
-    const address = resource.address + ", " + resource.neighborhood + ", Northbank";
+    const address =
+        resource.address + ", " + resource.neighborhood + ", Northbank";
     const mapUrl =
         "https://www.google.com/maps/search/?api=1&query=" +
         encodeURIComponent(resource.name + ", " + address);
@@ -73,28 +81,41 @@ const ResourceDetails = ({ resource, saved, openToday, onSave }) => {
                 >
                     <Icon aria-hidden="true" />
                 </span>
-                <span className={openToday ? styles.openStatus : styles.closedStatus}>
+                <span
+                    className={
+                        openToday ? styles.openStatus : styles.closedStatus
+                    }
+                >
                     <span />
                     {openToday ? "Open today" : "Closed today"}
                 </span>
             </div>
 
-            <p className={styles.categoryLabel}>{category.label} · {resource.neighborhood}</p>
+            <p className={styles.categoryLabel}>
+                {category.label} · {resource.neighborhood}
+            </p>
             <h2 id="details-title">{resource.name}</h2>
             <p className={styles.description}>{resource.description}</p>
 
             <div className={styles.address}>
                 <FiMapPin aria-hidden="true" />
-                <p>{resource.address}<span>{resource.neighborhood}, Northbank</span></p>
+                <p>
+                    {resource.address}
+                    <span>{resource.neighborhood}, Northbank</span>
+                </p>
             </div>
 
             <dl className={styles.facts}>
                 <div>
-                    <dt><FiClock aria-hidden="true" /> Hours</dt>
+                    <dt>
+                        <FiClock aria-hidden="true" /> Hours
+                    </dt>
                     <dd>{resource.hours}</dd>
                 </div>
                 <div>
-                    <dt><FiCheck aria-hidden="true" /> Access</dt>
+                    <dt>
+                        <FiCheck aria-hidden="true" /> Access
+                    </dt>
                     <dd>{resource.access}</dd>
                 </div>
             </dl>
@@ -140,7 +161,8 @@ const ResourceDetails = ({ resource, saved, openToday, onSave }) => {
                 {copyStatus}
             </p>
             <p className={styles.sampleNote}>
-                Demo listing for design purposes. Confirm current details with the provider.
+                Demo listing for design purposes. Confirm current details with
+                the provider.
             </p>
         </aside>
     );

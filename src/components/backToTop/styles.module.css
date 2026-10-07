@@ -28,7 +28,9 @@
     &:hover,
     &:focus-visible {
         border-color: var(--amber);
-        box-shadow: 0 0 0 4px rgba(225, 163, 68, 0.2), 0 7px 20px rgba(21, 48, 41, 0.22);
+        box-shadow:
+            0 0 0 4px rgba(225, 163, 68, 0.2),
+            0 7px 20px rgba(21, 48, 41, 0.22);
         outline: none;
     }
 

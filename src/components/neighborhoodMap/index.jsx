@@ -33,7 +33,11 @@ const NeighborhoodMap = ({
             <span className={styles.mapNote}>Illustrative sample map</span>
         </div>
 
-        <div className={styles.mapCanvas} role="group" aria-label="Map of Northbank with selectable community resource markers">
+        <div
+            className={styles.mapCanvas}
+            role="group"
+            aria-label="Map of Northbank with selectable community resource markers"
+        >
             <div
                 className={styles.mapArtwork}
                 style={{ "--map-zoom": zoom / 100 }}
@@ -86,19 +90,54 @@ const NeighborhoodMap = ({
                         <path d="M20 40 654 594" />
                         <path d="M54 593 760 50" />
                     </g>
-                    <g fill="#87958a" fontFamily="Arial, sans-serif" fontSize="13" fontWeight="700" letterSpacing="2">
-                        <text x="80" y="303">MARKET STREET</text>
-                        <text x="575" y="153">LIBRARY LANE</text>
-                        <text x="410" y="467">CEDAR AVENUE</text>
-                        <text x="822" y="341" transform="rotate(-72 822 341)">RIVER WALK</text>
+                    <g
+                        fill="#87958a"
+                        fontFamily="Arial, sans-serif"
+                        fontSize="13"
+                        fontWeight="700"
+                        letterSpacing="2"
+                    >
+                        <text x="80" y="303">
+                            MARKET STREET
+                        </text>
+                        <text x="575" y="153">
+                            LIBRARY LANE
+                        </text>
+                        <text x="410" y="467">
+                            CEDAR AVENUE
+                        </text>
+                        <text x="822" y="341" transform="rotate(-72 822 341)">
+                            RIVER WALK
+                        </text>
                     </g>
-                    <g fill="#718276" fontFamily="Arial, sans-serif" fontSize="17" fontWeight="700" letterSpacing="3">
-                        <text x="77" y="82">RIVER WARD</text>
-                        <text x="394" y="101">OLD MARKET</text>
-                        <text x="392" y="570">HILLTOP</text>
-                        <text x="760" y="567">EASTBANK</text>
+                    <g
+                        fill="#718276"
+                        fontFamily="Arial, sans-serif"
+                        fontSize="17"
+                        fontWeight="700"
+                        letterSpacing="3"
+                    >
+                        <text x="77" y="82">
+                            RIVER WARD
+                        </text>
+                        <text x="394" y="101">
+                            OLD MARKET
+                        </text>
+                        <text x="392" y="570">
+                            HILLTOP
+                        </text>
+                        <text x="760" y="567">
+                            EASTBANK
+                        </text>
                     </g>
-                    <circle cx="482" cy="336" r="8" fill="#f4f3ed" stroke="#315a4c" strokeWidth="4" />
+                    <circle
+                        cx="482"
+                        cy="336"
+                        r="8"
+                        fill="#f4f3ed"
+                        stroke="#315a4c"
+                        strokeWidth="4"
+                    />
                 </svg>
 
                 {resources.map((resource) => {
@@ -110,10 +149,19 @@ const NeighborhoodMap = ({
 
                     return (
                         <button
-                            className={selected ? styles.marker + " " + styles.selected : styles.marker}
+                            className={
+                                selected
+                                    ? styles.marker + " " + styles.selected
+                                    : styles.marker
+                            }
                             key={resource.id}
                             type="button"
-                            aria-label={"Select " + resource.name + ", " + category.label}
+                            aria-label={
+                                "Select " +
+                                resource.name +
+                                ", " +
+                                category.label
+                            }
                             aria-pressed={selected}
                             title={resource.name}
                             style={{
@@ -127,7 +175,9 @@ const NeighborhoodMap = ({
                                 <Icon aria-hidden="true" />
                             </span>
                             {selected ? (
-                                <span className={styles.markerName}>{resource.name}</span>
+                                <span className={styles.markerName}>
+                                    {resource.name}
+                                </span>
                             ) : null}
                         </button>
                     );

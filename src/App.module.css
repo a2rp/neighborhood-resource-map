@@ -52,7 +52,10 @@
 
     .workspace {
         display: grid;
-        grid-template-columns: minmax(260px, 0.86fr) minmax(430px, 1.7fr) minmax(270px, 0.9fr);
+        grid-template-columns: minmax(260px, 0.86fr) minmax(
+                430px,
+                1.7fr
+            ) minmax(270px, 0.9fr);
         grid-template-areas: "explorer map details";
         align-items: start;
         gap: 18px;
