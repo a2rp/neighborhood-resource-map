@@ -75,7 +75,6 @@
         color: var(--ink);
         box-shadow: 0 3px 10px rgba(30, 54, 45, 0.18);
         text-align: left;
-        transform: translate(-50%, -50%);
         transition:
             border-color 150ms ease,
             box-shadow 150ms ease;

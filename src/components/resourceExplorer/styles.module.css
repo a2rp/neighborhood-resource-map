@@ -171,6 +171,15 @@
         }
     }
 
+    .storageWarning {
+        margin-top: 10px;
+        padding: 9px 10px;
+        border: 1px solid rgba(225, 163, 68, 0.55);
+        border-radius: 8px;
+        color: #f1d9aa;
+        font-size: 11px;
+    }
+
     .listHeading {
         display: flex;
         align-items: center;

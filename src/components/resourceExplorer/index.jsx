@@ -34,6 +34,7 @@ const ResourceExplorer = ({
     savedOnly,
     onSavedOnlyChange,
     savedIds,
+    storageError,
     selectedId,
     onSelect,
     onSave,
@@ -121,6 +122,12 @@ const ResourceExplorer = ({
                 Saved
             </button>
         </div>
+
+        {storageError ? (
+            <p className={styles.storageWarning} role="status">
+                Saved places will reset when this page closes because browser storage is unavailable.
+            </p>
+        ) : null}
 
         <div className={styles.listHeading}>
             <h3>Nearby places</h3>

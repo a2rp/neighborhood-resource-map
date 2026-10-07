@@ -1,5 +1,5 @@
+import { useState } from "react";
 import BackToTop from "./components/backToTop/index.jsx";
-import { useEffect, useState } from "react";
 import NeighborhoodMap from "./components/neighborhoodMap/index.jsx";
 import ResourceDetails from "./components/resourceDetails/index.jsx";
 import ResourceExplorer from "./components/resourceExplorer/index.jsx";
@@ -8,12 +8,17 @@ import SiteHeader from "./components/siteHeader/index.jsx";
 import { isOpenToday, resources } from "./data/resources.js";
 import styles from "./App.module.css";
 
-const getSavedIds = () => {
+const getSavedState = () => {
     try {
-        const saved = JSON.parse(window.localStorage.getItem("block-atlas-saved") || "[]");
-        return Array.isArray(saved) ? saved : [];
+        const saved = JSON.parse(
+            window.localStorage.getItem("block-atlas-saved") || "[]",
+        );
+        return {
+            ids: Array.isArray(saved) ? saved : [],
+            storageError: false,
+        };
     } catch {
-        return [];
+        return { ids: [], storageError: true };
     }
 };
 
@@ -25,15 +30,8 @@ const App = () => {
     const [neighborhood, setNeighborhood] = useState("All neighborhoods");
     const [openOnly, setOpenOnly] = useState(false);
     const [savedOnly, setSavedOnly] = useState(false);
-    const [savedIds, setSavedIds] = useState(getSavedIds);
-
-    useEffect(() => {
-        try {
-            window.localStorage.setItem("block-atlas-saved", JSON.stringify(savedIds));
-        } catch {
-            return;
-        }
-    }, [savedIds]);
+    const [savedState, setSavedState] = useState(getSavedState);
+    const savedIds = savedState.ids;
 
     const filteredResources = resources.filter((resource) => {
         const searchText = [
@@ -74,11 +72,16 @@ const App = () => {
         savedOnly;
 
     const toggleSaved = (resourceId) => {
-        setSavedIds((current) =>
-            current.includes(resourceId)
-                ? current.filter((id) => id !== resourceId)
-                : [...current, resourceId],
-        );
+        const nextIds = savedIds.includes(resourceId)
+            ? savedIds.filter((id) => id !== resourceId)
+            : [...savedIds, resourceId];
+
+        try {
+            window.localStorage.setItem("block-atlas-saved", JSON.stringify(nextIds));
+            setSavedState({ ids: nextIds, storageError: false });
+        } catch {
+            setSavedState({ ids: nextIds, storageError: true });
+        }
     };
 
     const clearFilters = () => {
@@ -120,6 +123,7 @@ const App = () => {
                             savedOnly={savedOnly}
                             onSavedOnlyChange={setSavedOnly}
                             savedIds={savedIds}
+                            storageError={savedState.storageError}
                             selectedId={activeResource?.id}
                             onSelect={setSelectedId}
                             onSave={toggleSaved}
